@@ -9,6 +9,8 @@ import (
 
 func TestAtomicErrs(t *testing.T) {
 	errs := AtomicErrs{}
+	errs.Add(nil)
+	assert.False(t, errs.NotNil())
 	assert.Equal(t, "", errs.Error())
 
 	errs.Add(errors.New("1"))
@@ -17,4 +19,6 @@ func TestAtomicErrs(t *testing.T) {
 
 	errs.Add(errors.New("2"))
 	assert.Equal(t, "1\n2\n2", errs.Error())
+
+	assert.True(t, errs.NotNil())
 }

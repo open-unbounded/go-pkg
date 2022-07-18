@@ -28,6 +28,7 @@ func (a *AtomicErrs) Add(errs ...error) {
 func (a *AtomicErrs) Error() string {
 	a.rw.RLock()
 	defer a.rw.RUnlock()
+
 	if len(a.errs) == 0 {
 		return ""
 	}
@@ -44,5 +45,8 @@ func (a *AtomicErrs) Error() string {
 
 // NotNil checks if any error inside.
 func (a *AtomicErrs) NotNil() bool {
+	a.rw.RLock()
+	defer a.rw.RUnlock()
+
 	return len(a.errs) > 0
 }
