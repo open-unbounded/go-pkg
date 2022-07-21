@@ -5,8 +5,8 @@ import (
 	"path"
 )
 
-func Url(add string, paths ...string) (string, error) {
-	nurl, err := url.Parse(add)
+func Url(addr string, paths ...string) (string, error) {
+	nurl, err := url.Parse(addr)
 	if err != nil {
 		return "", err
 	}
