@@ -1,14 +1,13 @@
 package task
 
 import (
-	"fmt"
 	"time"
 
 	syncx "github.com/open-unbounded/go-pkg/sync"
 	"go.uber.org/atomic"
 )
 
-// ScheduledTask represents a scheduled task
+// ScheduledTask represents a scheduled task.
 type ScheduledTask struct {
 	do          func()
 	duration    *atomic.Duration
@@ -41,7 +40,6 @@ func (s *ScheduledTask) doStart() {
 
 			select {
 			case <-s.stopChan:
-				fmt.Println("退出")
 				return
 			default:
 			}
@@ -60,7 +58,7 @@ func (s *ScheduledTask) doStop() {
 	close(s.stopChan)
 }
 
-// SetDuration sets the interval for scheduling tasks
+// SetDuration sets the interval for scheduling tasks.
 func (s ScheduledTask) SetDuration(duration time.Duration) {
 	s.duration.Store(duration)
 }
