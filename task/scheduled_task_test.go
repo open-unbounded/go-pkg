@@ -1,7 +1,6 @@
 package task
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -13,7 +12,6 @@ func TestScheduledTask(t *testing.T) {
 	i := &atomic.Int32{}
 	task := NewScheduledTask(func() {
 		i.Add(1)
-		fmt.Println(i.Load())
 	}, time.Second)
 	task.Start()
 	defer task.Stop()
