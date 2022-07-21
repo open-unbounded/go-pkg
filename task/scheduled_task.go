@@ -8,6 +8,7 @@ import (
 	"go.uber.org/atomic"
 )
 
+// ScheduledTask represents a scheduled task
 type ScheduledTask struct {
 	do          func()
 	duration    *atomic.Duration
@@ -16,6 +17,7 @@ type ScheduledTask struct {
 	stopChan    chan struct{}
 }
 
+// NewScheduledTask returns a ScheduledTask.
 func NewScheduledTask(do func(), duration time.Duration) *ScheduledTask {
 	s := &ScheduledTask{do: do, duration: atomic.NewDuration(duration), stopChan: make(chan struct{})}
 	s.startDoOnce = syncx.DoOnce(s.doStart)
@@ -24,6 +26,7 @@ func NewScheduledTask(do func(), duration time.Duration) *ScheduledTask {
 	return s
 }
 
+// Start starts scheduling tasks.
 func (s *ScheduledTask) Start() {
 	s.startDoOnce()
 }
@@ -48,14 +51,16 @@ func (s *ScheduledTask) doStart() {
 	}()
 }
 
+// Stop gracefully stop a scheduled task.
 func (s *ScheduledTask) Stop() {
 	s.stopDoOnce()
 }
 
-func (s ScheduledTask) SetDuration(duration time.Duration) {
-	s.duration.Store(duration)
-}
-
 func (s *ScheduledTask) doStop() {
 	close(s.stopChan)
+}
+
+// SetDuration sets the interval for scheduling tasks
+func (s ScheduledTask) SetDuration(duration time.Duration) {
+	s.duration.Store(duration)
 }
