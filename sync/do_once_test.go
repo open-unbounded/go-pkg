@@ -8,12 +8,12 @@ import (
 
 func TestDoOne(t *testing.T) {
 	i := 1
-	doOne := DoOne(func() {
+	doOnce := DoOnce(func() {
 		i++
 	})
 	assert.Equal(t, 1, i)
-	doOne()
+	doOnce()
 	assert.Equal(t, 2, i)
-	doOne()
+	doOnce()
 	assert.Equal(t, 2, i)
 }
