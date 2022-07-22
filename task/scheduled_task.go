@@ -31,22 +31,19 @@ func (s *ScheduledTask) Start() {
 }
 
 func (s *ScheduledTask) doStart() {
-	go func() {
+	s.do()
+	ticker := time.NewTicker(s.duration.Load())
+	for {
+		<-ticker.C
 		s.do()
-		ticker := time.NewTicker(s.duration.Load())
-		for {
-			<-ticker.C
-			s.do()
 
-			select {
-			case <-s.stopChan:
-				return
-			default:
-			}
-			ticker.Reset(s.duration.Load())
-
+		select {
+		case <-s.stopChan:
+			return
+		default:
 		}
-	}()
+		ticker.Reset(s.duration.Load())
+	}
 }
 
 // Stop gracefully stop a scheduled task.

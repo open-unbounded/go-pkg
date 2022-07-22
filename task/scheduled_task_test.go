@@ -13,7 +13,7 @@ func TestScheduledTask(t *testing.T) {
 	task := NewScheduledTask(func() {
 		i.Add(1)
 	}, time.Second)
-	task.Start()
+	go task.Start()
 	defer task.Stop()
 	time.Sleep(time.Second + time.Second/2)
 	task.Stop()
