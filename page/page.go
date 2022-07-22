@@ -22,16 +22,17 @@ type (
 		Page int64 `json:"page"` // 当前页码
 	}
 
-	Page struct {
+	Page[T any] struct {
 		TotalSize     int64 `json:"totalSize"`     // 总条数
 		TotalPageSize int64 `json:"totalPageSize"` // 总页数
 		RequestPage
-		Data interface{} `json:"data"` // 数据
+		Data []T `json:"data"` // 数据
 	}
 )
 
-func GenPage(totalSize int64, requestPage *RequestPage) (p *Page) {
-	p = new(Page)
+// NewPage returns a Page.
+func NewPage[T any](totalSize int64, requestPage *RequestPage) (p *Page[T]) {
+	p = &Page[T]{}
 	p.TotalSize = totalSize
 	if requestPage.Size == -1 {
 		p.Size = totalSize
@@ -39,9 +40,7 @@ func GenPage(totalSize int64, requestPage *RequestPage) (p *Page) {
 		return
 	}
 
-	totalPageSize := int64(math.Ceil(float64(totalSize) / float64(requestPage.Size)))
-	p.TotalPageSize = totalPageSize
-
+	p.TotalPageSize = int64(math.Ceil(float64(totalSize) / float64(requestPage.Size)))
 	p.Size = requestPage.Size
 	p.Page = requestPage.Page
 	return
