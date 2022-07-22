@@ -21,11 +21,11 @@ import (
 )
 
 func TestGenPage(t *testing.T) {
-	page := GenPage(10, &RequestPage{
+	page := NewPage[int](10, &RequestPage{
 		Size: 2,
 		Page: 0,
 	})
-	assert.Equal(t, &Page{
+	assert.Equal(t, &Page[int]{
 		TotalSize:     10,
 		TotalPageSize: 5,
 		RequestPage: RequestPage{
@@ -34,11 +34,11 @@ func TestGenPage(t *testing.T) {
 		},
 	}, page)
 
-	page = GenPage(11, &RequestPage{
+	page = NewPage[int](11, &RequestPage{
 		Size: 2,
 		Page: 0,
 	})
-	assert.Equal(t, &Page{
+	assert.Equal(t, &Page[int]{
 		TotalSize:     11,
 		TotalPageSize: 6,
 		RequestPage: RequestPage{
@@ -47,11 +47,11 @@ func TestGenPage(t *testing.T) {
 		},
 	}, page)
 
-	page = GenPage(11, &RequestPage{
+	page = NewPage[int](11, &RequestPage{
 		Size: -1,
 		Page: 0,
 	})
-	assert.Equal(t, &Page{
+	assert.Equal(t, &Page[int]{
 		TotalSize:     11,
 		TotalPageSize: 1,
 		RequestPage: RequestPage{
@@ -60,11 +60,11 @@ func TestGenPage(t *testing.T) {
 		},
 	}, page)
 
-	page = GenPage(11, &RequestPage{
+	page = NewPage[int](11, &RequestPage{
 		Size: 3,
 		Page: 0,
 	})
-	assert.Equal(t, &Page{
+	assert.Equal(t, &Page[int]{
 		TotalSize:     11,
 		TotalPageSize: 4,
 		RequestPage: RequestPage{
@@ -72,12 +72,12 @@ func TestGenPage(t *testing.T) {
 			Page: 0,
 		},
 	}, page)
-	page = GenPage(11, &RequestPage{
+	page = NewPage[int](11, &RequestPage{
 		Size: 3,
 		Page: 1,
 	})
 
-	assert.Equal(t, &Page{
+	assert.Equal(t, &Page[int]{
 		TotalSize:     11,
 		TotalPageSize: 4,
 		RequestPage: RequestPage{
@@ -86,12 +86,12 @@ func TestGenPage(t *testing.T) {
 		},
 	}, page)
 
-	page = GenPage(11, &RequestPage{
+	page = NewPage[int](11, &RequestPage{
 		Size: 3,
 		Page: 3,
 	})
 
-	assert.Equal(t, &Page{
+	assert.Equal(t, &Page[int]{
 		TotalSize:     11,
 		TotalPageSize: 4,
 		RequestPage: RequestPage{
