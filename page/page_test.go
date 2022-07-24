@@ -20,7 +20,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGenPage(t *testing.T) {
+func TestNewPage(t *testing.T) {
 	page := NewPage[int](10, &RequestPage{
 		Size: 2,
 		Page: 0,
@@ -72,11 +72,11 @@ func TestGenPage(t *testing.T) {
 			Page: 0,
 		},
 	}, page)
+
 	page = NewPage[int](11, &RequestPage{
 		Size: 3,
 		Page: 1,
 	})
-
 	assert.Equal(t, &Page[int]{
 		TotalSize:     11,
 		TotalPageSize: 4,
@@ -90,7 +90,6 @@ func TestGenPage(t *testing.T) {
 		Size: 3,
 		Page: 3,
 	})
-
 	assert.Equal(t, &Page[int]{
 		TotalSize:     11,
 		TotalPageSize: 4,
