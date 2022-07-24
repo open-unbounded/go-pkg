@@ -32,8 +32,7 @@ type (
 
 // NewPage returns a Page.
 func NewPage[T any](totalSize int64, requestPage *RequestPage) (p *Page[T]) {
-	p = &Page[T]{}
-	p.TotalSize = totalSize
+	p = &Page[T]{TotalSize: totalSize, RequestPage: *requestPage}
 	if requestPage.Size == -1 {
 		p.Size = totalSize
 		p.TotalPageSize = 1
@@ -41,7 +40,5 @@ func NewPage[T any](totalSize int64, requestPage *RequestPage) (p *Page[T]) {
 	}
 
 	p.TotalPageSize = int64(math.Ceil(float64(totalSize) / float64(requestPage.Size)))
-	p.Size = requestPage.Size
-	p.Page = requestPage.Page
 	return
 }
