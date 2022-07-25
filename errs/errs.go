@@ -2,19 +2,15 @@ package errs
 
 import (
 	"strings"
-	"sync"
 )
 
-// AtomicErrs an error that can hold multiple errors.
-// Concurrency safety.
-type AtomicErrs struct {
-	rw   sync.RWMutex
+// Errs an error that can hold multiple errors.
+type Errs struct {
 	errs []error
 }
 
 // Add adds errs to be, nil errors are ignored.
-func (a *AtomicErrs) Add(errs ...error) {
-	a.rw.Lock()
+func (a *Errs) Add(errs ...error) {
 	for _, err := range errs {
 		if err == nil {
 			continue
@@ -22,14 +18,10 @@ func (a *AtomicErrs) Add(errs ...error) {
 
 		a.errs = append(a.errs, err)
 	}
-	a.rw.Unlock()
 }
 
 // Err returns an error that represents all errors.
-func (a *AtomicErrs) Error() string {
-	a.rw.RLock()
-	defer a.rw.RUnlock()
-
+func (a *Errs) Error() string {
 	if len(a.errs) == 0 {
 		return ""
 	}
@@ -45,9 +37,6 @@ func (a *AtomicErrs) Error() string {
 }
 
 // NotNil checks if any error inside.
-func (a *AtomicErrs) NotNil() bool {
-	a.rw.RLock()
-	defer a.rw.RUnlock()
-
+func (a *Errs) NotNil() bool {
 	return len(a.errs) > 0
 }
