@@ -6,6 +6,7 @@ import (
 )
 
 // AtomicErrs an error that can hold multiple errors.
+// Concurrency safety.
 type AtomicErrs struct {
 	rw   sync.RWMutex
 	errs []error

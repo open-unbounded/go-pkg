@@ -4,6 +4,7 @@ import (
 	"strings"
 )
 
+// Errs an error that can hold multiple errors.
 type Errs struct {
 	errs []error
 }
