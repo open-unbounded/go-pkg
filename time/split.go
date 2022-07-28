@@ -1,6 +1,7 @@
 package time
 
 import (
+	"math"
 	"time"
 )
 
@@ -11,7 +12,7 @@ func Split(start, end time.Time, interval time.Duration) [][2]time.Time {
 		return nil
 	}
 
-	times := make([][2]time.Time, 0, end.Sub(start)/interval)
+	times := make([][2]time.Time, 0, int(math.Ceil(float64(end.Sub(start))/float64(interval))))
 	p1 := start
 	p2 := start.Add(interval)
 	// p2 < end => p1 < end
