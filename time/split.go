@@ -4,6 +4,8 @@ import (
 	"time"
 )
 
+// Split Returns a delimited slice, where the elements of the slice are arrays,
+// the first bit of the array is the start time, and the second bit is the end time.
 func Split(start, end time.Time, interval time.Duration) [][2]time.Time {
 	if start.Equal(end) || interval == 0 {
 		return nil
