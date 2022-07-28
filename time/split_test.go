@@ -8,7 +8,6 @@ import (
 )
 
 func TestSplit(t *testing.T) {
-
 	start := time.Now()
 	end := start.Add(time.Hour - time.Second*40)
 	assert.Len(t, Split(start, end, time.Minute), 60)
@@ -50,5 +49,4 @@ func TestSplit(t *testing.T) {
 	start = time.Now()
 	end = start.Add(time.Hour)
 	assert.Len(t, Split(start, end, time.Hour), 1)
-
 }
