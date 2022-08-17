@@ -19,7 +19,7 @@ func TestUrl(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "https://a.com/a/b/c", url)
 
-	url, err = Url("https://a.com/x", "/a/x/", "b/c/")
+	url, err = Url("https://a.com/x", "/a/x/", "b/c")
 	assert.NoError(t, err)
 	assert.Equal(t, "https://a.com/x/a/x/b/c", url)
 
@@ -29,7 +29,7 @@ func TestUrl(t *testing.T) {
 
 	url, err = Url("https://a.com/x/x?x=1", "/a", "b/c")
 	assert.NoError(t, err)
-	assert.Equal(t, "https://a.com/x/x/a/b/c", url)
+	assert.Equal(t, "https://a.com/x/x/a/b/c?x=1", url)
 
 	url, err = Url("%gh&%ij", "a", "b/c")
 	assert.Error(t, err)
