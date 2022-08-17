@@ -2,14 +2,11 @@ package url
 
 import (
 	"net/url"
-	"path"
 )
 
+// Url returns a URL string with the provided path elements joined to
+// the existing path of base and the resulting path cleaned of any ./ or ../ elements.
+// Deprecated: Use url.JoinPath instead.
 func Url(addr string, paths ...string) (string, error) {
-	nurl, err := url.Parse(addr)
-	if err != nil {
-		return "", err
-	}
-
-	return nurl.Scheme + "://" + path.Join(append([]string{nurl.Host, nurl.Path}, paths...)...), nil
+	return url.JoinPath(addr, paths...)
 }
