@@ -1,6 +1,7 @@
 package errs
 
 import (
+	"errors"
 	"strings"
 )
 
@@ -43,7 +44,30 @@ func (a *Errs) NotNil() bool {
 
 // Errors returns a copy of errs.
 func (a *Errs) Errors() []error {
-	errors := make([]error, len(a.errs))
-	copy(errors, a.errs)
-	return errors
+	errs := make([]error, len(a.errs))
+	copy(errs, a.errs)
+	return errs
+}
+
+// Is reports whether any errs in err's chain matches target.
+func (a *Errs) Is(target error) bool {
+	for _, e := range a.errs {
+		if errors.Is(e, target) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// As finds the first errs in err's chain that matches target, and if one is found, sets
+// target to that error value and returns true. Otherwise, it returns false.
+func (a *Errs) As(target interface{}) bool {
+	for _, err := range a.errs {
+		if errors.As(err, target) {
+			return true
+		}
+	}
+
+	return false
 }
