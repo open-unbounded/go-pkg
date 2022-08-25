@@ -40,3 +40,10 @@ func (a *Errs) Error() string {
 func (a *Errs) NotNil() bool {
 	return len(a.errs) > 0
 }
+
+// Errors returns a copy of errs.
+func (a *Errs) Errors() []error {
+	errors := make([]error, len(a.errs))
+	copy(errors, a.errs)
+	return errors
+}
