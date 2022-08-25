@@ -2,6 +2,8 @@ package errs
 
 import (
 	"errors"
+	"io/fs"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -23,4 +25,14 @@ func TestErrs(t *testing.T) {
 	assert.Equal(t, "1\n2\n2", errs.Error())
 	assert.True(t, errs.NotNil())
 	assert.EqualValues(t, []error{err1, err2, err2}, errs.Errors())
+
+	assert.True(t, errs.Is(err1))
+	assert.True(t, errs.Is(err2))
+
+	_, err := os.Open("non-existing")
+	errs.Add(err)
+
+	var pathError *fs.PathError
+	assert.True(t, errs.As(&pathError))
+	assert.EqualValues(t, "non-existing", pathError.Path)
 }
