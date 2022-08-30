@@ -20,4 +20,6 @@ func TestUnderscore(t *testing.T) {
 	assert.Equal(t, "_foo1_bar1_bar2", Underscore("_foo1Bar1Bar2"))
 	assert.Equal(t, "_foo1_bar1_bar2", Underscore("_Foo1Bar1Bar2"))
 	assert.Equal(t, "___foo1_bar1_bar2", Underscore("___Foo1Bar1Bar2"))
+	assert.Equal(t, "__1_foo1_bar1_bar2", Underscore("__1Foo1Bar1Bar2"))
+	assert.Equal(t, "__s1_foo1_bar1_bar2", Underscore("__s1Foo1Bar1Bar2"))
 }
