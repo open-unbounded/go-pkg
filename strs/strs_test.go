@@ -30,7 +30,6 @@ func TestTruncate(t *testing.T) {
 	for i := 0; i < 1000; i++ {
 		assert.Equal(t, pureTruncateWithTune(s, i), Truncate(s, i))
 	}
-
 }
 
 func FuzzTruncate(f *testing.F) {
