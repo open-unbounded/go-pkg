@@ -5,9 +5,10 @@ import "strings"
 type (
 	// Joiner is used to construct a sequence of characters separated by a delimiter and optionally starting with a supplied prefix and ending with a supplied suffix.
 	Joiner struct {
-		b    *strings.Builder
-		opts *joinerOptions
-		n    int // n is length of prefix and suffix for
+		b           strings.Builder
+		initialized bool
+		opts        *joinerOptions
+		n           int // n is length of prefix and suffix for
 	}
 	// joinerOptions a option.
 	joinerOptions struct {
@@ -105,30 +106,24 @@ func (j *Joiner) Write(p []byte) (int, error) {
 
 // String returns the accumulated string.
 func (j *Joiner) String() string {
-	var s string
-	if j.b != nil {
-		s = j.b.String()
-	}
+	s := j.b.String()
 
 	return j.opts.prefix + s + j.opts.suffix
 }
 
 func (j *Joiner) tryWriteStep() {
-	if j.b == nil {
-		j.b = &strings.Builder{}
-	} else {
+	if j.initialized {
 		j.b.WriteString(j.opts.step)
+		return
 	}
+
+	j.initialized = true
 }
 
 // Grow grows b's capacity, if necessary, to guarantee space for
 // another n bytes. After Grow(n), at least n bytes can be written to b
 // without another allocation. If n is negative, Grow panics.
 func (j *Joiner) Grow(n int) {
-	if j.b == nil {
-		j.b = &strings.Builder{}
-	}
-
 	j.b.Grow(n)
 }
 
@@ -136,25 +131,15 @@ func (j *Joiner) Grow(n int) {
 // total space allocated for the string being built and includes any bytes
 // already written.
 func (j *Joiner) Cap() int {
-	if j.b == nil {
-		return j.n
-	}
-
 	return j.b.Cap() + j.n
 }
 
 // Reset resets the Builder to be empty.
 func (j *Joiner) Reset() {
-	if j.b != nil {
-		j.b.Reset()
-	}
+	j.b.Reset()
 }
 
 // Len returns the len of accumulated string.
 func (j *Joiner) Len() int {
-	if j.b == nil {
-		return j.n
-	}
-
 	return j.b.Len() + j.n
 }
