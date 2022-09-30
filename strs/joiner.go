@@ -112,7 +112,6 @@ func (j *Joiner) String() string {
 }
 
 func (j *Joiner) tryWriteStep() {
-
 	if j.initialized {
 		j.b.WriteString(j.opts.step)
 		return
