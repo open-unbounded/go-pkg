@@ -3,7 +3,7 @@ module github.com/open-unbounded/go-pkg
 go 1.19
 
 require (
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.3
 	go.uber.org/atomic v1.10.0
 )
 
